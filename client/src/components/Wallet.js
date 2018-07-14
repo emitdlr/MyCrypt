@@ -166,7 +166,7 @@ export default class Wallet extends Component {
       < div className="container">
       <div className="row">
       <div className="col-12 text-center">
-      <h1 className="text-center"></h1>
+      <div className="container">
           <h1>Your Wallet</h1>
       </div>
 
@@ -177,6 +177,7 @@ export default class Wallet extends Component {
           <h3 className="font-weight-heavy">Net Worth: ${this.state.netWorth}</h3>
           <div class="column-12">
           <h4 className="mt-4 font-weight-light">Coins Owned</h4>
+          </div>
           </div>
           </div>
           </div>
