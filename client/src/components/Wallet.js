@@ -133,9 +133,9 @@ export default class Wallet extends Component {
 
       return (
         <div>
-          <div className="card m-2" style={cardStyle}>
+          <div className="card m-2 shadow-sm" style={cardStyle}>
             <div className="card-body" id="${item}">
-              <h4 className="font-weight-light">{this.state.cryptos[item].symbol} - ${this.state.cryptos[item].quotes.USD.price} </h4>
+              <h4 className="font-weight-light">{this.state.cryptos[item].symbol} - ${this.state.cryptos[item].quotes.USD.price.toFixed(2)} </h4>
               <h5 className="font-weight-light">Owned: {this.state.wallet[this.state.cryptos[item].symbol]}</h5>
               <hr />
               <h5 className="font-weight-light">Recent performance:</h5>
@@ -155,13 +155,14 @@ export default class Wallet extends Component {
   render() {
     return (
       < div className="container" >
-        <div className="text-center">
-          <h2>Your Wallet</h2>
-          <hr className="mx-5" />
+        <div className="mt-4 text-center">
+          <h2 className="font-weight-light">Your Wallet</h2>
+
+          <hr style={{width: "50%", align: "center"}} />
+
           <h3 className="font-weight-light">Net Worth: ${this.state.netWorth}</h3>
           <h4 className="font-weight-light">Cash: ${this.state.wallet.cash}</h4>
-          {/* <hr className="text-center mx-5" align="center" width="50%" /> */}
-          <h4 className="mt-4 font-weight-light">Coins Owned</h4>
+          <h4 className="mt-4 font-weight-light"><u>Coins Owned</u></h4>
 
         </div>
         <div className="row justify-content-center" id='coinCards'>

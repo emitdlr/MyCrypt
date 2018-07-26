@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Home from './components/Landing';
@@ -15,7 +15,14 @@ import { firebase } from './firebase';
 
 let newWallet = {
   cash: 10000
-}
+};
+
+let redirect = ''
+
+let backgroundStyle = {
+  backgroundColor: "#EEF2F7",
+  position: "absolute", top: 0, bottom: 0, left: 0, right: 0
+};
 
 class App extends Component {
   constructor(props) {
@@ -26,35 +33,26 @@ class App extends Component {
       wallet: {},
       // cryptos: []
     };
-  }
+  };
 
 
   componentDidMount() {
     firebase.auth.onAuthStateChanged(authUser => {
       authUser
-        ? this.setState(() => ({ authUser }))
-        : this.setState(() => ({ authUser: null }))
-      // console.log(this.state.authUser.email)
+        ? (
+          this.setState(() => ({ authUser })),
+          redirect = routes.WALLET
+        )
+        : (this.setState(() => ({ authUser: null })),
+          redirect = routes.HOME
+        )
+        // console.log(this.state.authUser.email)
         ;
       // Signs the user into their game account upon logging into Firebase
       this.userLogin();
+      console.log(redirect)
     });
-  }
-
-
-  // https://github.com/facebook/react/issues/5591
-  // https://github.com/facebook/react/issues/5591
-  // https://github.com/facebook/react/issues/5591
-  // cryptoAPI = () => {
-  //   API.search()
-  //     .then(
-  //       res => {
-  //         // Puts initial response (object of objects) into an array so we can check it's length for rendering (similar to users)
-  //         this.setState({ cryptos: res.data.data })
-  //       }
-  //     )
-  //     .catch(err => console.log(err));
-  // };
+  };
 
 
   // Sees if the signed in user has an account in the DB and if not, creates the user
@@ -66,10 +64,13 @@ class App extends Component {
         if (res.data === null) {
           console.log("account not found");
           this.createUser();
+
+          // Re-log the user in after creating their account
+          this.userLogin();
         }
         else {
           this.setState({ wallet: res.data.wallet })
-        }
+        };
       })
       .catch(err => console.log(err))
   };
@@ -122,19 +123,33 @@ class App extends Component {
   }
 
 
+  // {authUser
+  //   ? <HeaderAuth />
+  //   : <HeaderNonAuth />
+  // }
+
 
 
   render() {
+
     return (
       <Router>
-        <div>
+        <div style={backgroundStyle}>
           <Header authUser={this.state.authUser} />
-
-          <hr />
-
+          {/* <Route
+            exact path={routes.LANDING}
+            component={() => <Home />}
+          /> */}
           <Route
             exact path={routes.HOME}
             component={() => <Home />}
+          />
+          <Route
+            exact path={"/"} render={() =>
+              this.state.authUser
+                ? <Redirect to={routes.WALLET} />
+                : <Redirect to={routes.HOME} />
+            }
           />
           <Route
             exact path={routes.SIGN_UP}

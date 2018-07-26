@@ -9,6 +9,10 @@ const Schema = mongoose.Schema;
 
 // Insert user schema for Mongoose here
 const transactionSchema = new Schema({
+  transactionType: {
+    type: String,
+    required: true
+  },
   coinSymbol: {
     type: String,
     required: true
@@ -17,7 +21,7 @@ const transactionSchema = new Schema({
     type: Number,
     required: true
   },
-  purchasePrice: {
+  transactionAmount: {
     type: Number,
     required: true
   },
