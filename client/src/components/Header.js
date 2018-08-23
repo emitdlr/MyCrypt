@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import SignOutButton from './SignOut';
-import SignInForm from './SignIn';
+  import SignOutButton from './SignOut';
+  import SignInForm from './SignIn';
 import * as routes from '../constants/routes';
 
 

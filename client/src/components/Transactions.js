@@ -12,7 +12,6 @@ var formStyle = {
   marginLeft: "-100px"
 }
 
-
 export default class Transactions extends Component {
 
   // Set initial state
